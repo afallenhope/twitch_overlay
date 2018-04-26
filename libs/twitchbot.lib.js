@@ -11,7 +11,7 @@ class TwitchBot extends EventEmitter {
         this.irc = new IrcLite('irc.chat.twitch.tv', 6667,irccfg);
         this.irc.on('connected',    () => { self.irc_connected() });
         this.irc.on('end_motd',     () => { self.irc_motd() });
-        this.irc.on('message',     (recipient,sender,message,raw,socket) => { self.irc_message(recipient,sender,message,raw,socket) });
+        this.irc.on('message',      (recipient,sender,message,raw,socket) => { self.irc_message(recipient,sender,message,raw,socket) });
         this.irc.on('data',         (data) => { self.irc_datareceived(data) });
         this.irc.on('error',        (error) => { self.irc_error(error) });
         this.irc.on('disconnected', (error) => { self.irc_disconnected(error) });;
