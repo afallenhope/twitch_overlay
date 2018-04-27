@@ -81,7 +81,6 @@ class IrcLite extends EventEmitter
         if (channelName.length>3) {
             this.sendRaw('JOIN ' + channelName);
             this.channels.push(channelName);
-
         }
     }
 
@@ -94,7 +93,7 @@ class IrcLite extends EventEmitter
         if (channelName.length>3) {
             this.sendRaw('PART :' + channelName + ' ' + partMsg);
             const index = this.channels.indexOf(channelName);
-            if (index!==-1)this.channels.splice(index,1);
+            if (index !==-1 )this.channels.splice(index,1);
 
         }
     }
@@ -180,7 +179,7 @@ class IrcLite extends EventEmitter
                     break;
                 }
                 if (line.length > 0 ){
-                    this.emit('data', {socket: this.socket, raw: line});
+                    this.emit('data', line, this.socket);
                     console.log('« ' ,line);
                     this.__parsePacket(line);
                 }
@@ -200,10 +199,13 @@ class IrcLite extends EventEmitter
         
         switch(command) {
             case 'PRIVMSG':
-                this.emit('message',  recipient, sender, message, bufferString, this.socket)
+                this.emit('message', recipient, sender, message, bufferString, this.socket);
+            break;
+            case 'NOTICE':
+                this.emit('notice', recipient, sender, message, bufferString, this.socket);
             break;
             default:
-                this.emit('data', {socket: this.socket, raw: bufferString});
+                this.emit('data', bufferString, this.socket);
         }
     }
 
@@ -213,7 +215,7 @@ class IrcLite extends EventEmitter
      */
     onDisconnected(had_error) {
         this.connected = false;
-        this.emit('disconnected' , {socket: this.socket, had_error : had_error});
+        this.emit('disconnected' ,  had_error, this.socket);
     }
 
     /**
@@ -221,7 +223,7 @@ class IrcLite extends EventEmitter
      * @param {string} error 
      */
     onError(error) {
-        this.emit('error', {socket: this.socket, error : error});
+        this.emit('error',  error , this.socket );
     }
 
 

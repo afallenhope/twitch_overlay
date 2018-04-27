@@ -1,0 +1,20 @@
+module.exports = {
+ badge  ,
+ color  ,
+ display_name  ,
+ sender   ,
+ isMod  ,
+ msg_id  ,
+ ritual_name  ,
+ recipient  ,
+ isSub  ,
+ sys_msg  ,
+ isTurbo  ,
+ user_id  ,
+ user_type  ,
+ nickname  ,
+ realname  ,
+ hostname  ,
+ msg_type  ,
+ payload  
+}
